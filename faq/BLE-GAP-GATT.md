@@ -1,4 +1,4 @@
-# Bluetooth Classic vs BLE
+# BLE
 
 ## GAP vs GATT
 
