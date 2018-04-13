@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2006 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,11 +37,18 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+#include "nrf_assert.h"
+#include "app_error.h"
+#include "nordic_common.h"
 
-#ifndef NRFX_CONFIG_H__
-#define NRFX_CONFIG_H__
+__WEAK void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
+{
+    assert_info_t assert_info =
+    {
+        .line_num    = line_num,
+        .p_file_name = file_name,
+    };
+    app_error_fault_handler(NRF_FAULT_ID_SDK_ASSERT, 0, (uint32_t)(&assert_info));
 
-// TODO - temporary redirection
-#include "sdk_config.h"
-
-#endif // NRFX_CONFIG_H__
+    UNUSED_VARIABLE(assert_info);
+}
